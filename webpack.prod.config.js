@@ -1,14 +1,13 @@
 //webpack and its dependencies
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+//package.json to pull in the project title
 
 module.exports = {
     devtool: 'source-map',
     debug: true,
     entry: [
-        'webpack-dev-server/client?http://localhost:8000',
-        'webpack/hot/only-dev-server',
-        './src/index.js'
+        "bs-webcomponent": './src/index.js',
     ],
     module: {
         preLoaders: [
@@ -50,7 +49,7 @@ module.exports = {
     output: {
         path: __dirname + '/dist',
         publicPath: '/',
-        filename: 'bundle.js'
+        filename: '[name].min.js'
     },
     devServer: {
         contentBase: './dist',
@@ -60,10 +59,13 @@ module.exports = {
         hot: false
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: './src/index.html'
-            // appMountId: 'app'
-        })
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            },
+        }),
     ]
 };

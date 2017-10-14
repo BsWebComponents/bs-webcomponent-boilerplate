@@ -1,13 +1,13 @@
 //webpack and its dependencies
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+//package.json to pull in the project title
 
 module.exports = {
     devtool: 'source-map',
     debug: true,
     entry: {
-        "bs-webcomponent-boilerplate": './src/index.js',
-        'slim': ['slim-js']
+        "bs-webcomponent": './src/index.js',
     },
     module: {
         preLoaders: [
@@ -47,24 +47,25 @@ module.exports = {
         extensions: ['', '.js']
     },
     output: {
-        path: __dirname + '/test/build',
+        path: __dirname + '/test/dist',
         publicPath: './',
-        filename: '[name].bundle.js'
+        filename: '[name].min.js'
     },
     devServer: {
-        contentBase: './test/build',
+        contentBase: './test/dist',
         port: 8385,
         noInfo: true,
         open: true,
         hot: false
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: './test/index.html'
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-          name: 'slim',
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            },
         }),
     ]
 };

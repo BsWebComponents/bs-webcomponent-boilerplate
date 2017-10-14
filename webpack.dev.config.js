@@ -6,10 +6,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     devtool: 'source-map',
     debug: true,
-    entry: {
-        "bs-webcomponent-boilerplate": './src/index.js',
-        'slim': ['slim-js']
-    },
+    entry: [
+        "bs-webcomponent": './src/index.js',
+    ],
     module: {
         preLoaders: [
             {
@@ -49,23 +48,19 @@ module.exports = {
     },
     output: {
         path: __dirname + '/dev_build',
-        publicPath: './',
-        filename: '[name].bundle.js'
+        publicPath: '/',
+        filename: '[name].js'
     },
     devServer: {
         contentBase: './dev_build',
-        port: 8385,
+        port: 8000,
         noInfo: true,
         open: true,
         hot: false
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: './src/index.html'
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-          name: 'slim',
-        }),
+        })
     ]
 };
